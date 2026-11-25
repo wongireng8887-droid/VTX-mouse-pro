@@ -1,0 +1,43 @@
+# VTX Mouse Pro - upload lewat Termux
+
+## Sebelum mulai (sekali saja)
+Buat repo KOSONG di GitHub, misalnya bernama VTX-mouse-pro:
+  github.com -> New repository -> nama: VTX-mouse-pro -> JANGAN centang README / .gitignore / license -> Create.
+Kalau nama akun GitHub lu bukan "wongireng8887-droid", ganti di baris "git remote add" di bawah.
+
+## A. Pertama kali (folder baru + sambung ke repo baru)
+cd ~/storage/shared/"APK MOBI" && \
+mkdir -p VTX && \
+rm -rf vtx_zip && mkdir vtx_zip && \
+unzip -o ~/storage/downloads/VTXMousePro_fase1.zip -d vtx_zip && \
+test -f vtx_zip/VTXMousePro/app/build.gradle.kts && \
+cp -r vtx_zip/VTXMousePro/. VTX/ && \
+cd VTX && \
+git config --global --add safe.directory '*' && \
+git init -b main && \
+git remote add origin https://github.com/wongireng8887-droid/VTX-mouse-pro.git && \
+git add -A && \
+git commit -m "Fase 1: fondasi VTX Mouse Pro" && \
+git push -u origin main
+
+Kalau diminta password, pakai Personal Access Token GitHub (bukan password akun).
+
+## B. Update fase berikutnya (ganti nama zip)
+cd ~/storage/shared/"APK MOBI" && \
+rm -rf vtx_zip && mkdir vtx_zip && \
+unzip -o ~/storage/downloads/NAMA_ZIP_BARU.zip -d vtx_zip && \
+test -f vtx_zip/VTXMousePro/app/build.gradle.kts && \
+cd VTX && \
+rm -rf app && \
+cp -r ../vtx_zip/VTXMousePro/. . && \
+test -f app/build.gradle.kts && \
+git add -A && \
+git status --short | head -20 && \
+git commit -m "update fase" && \
+git push
+
+(Cek hasil git status: harus M/A, bukan banyak D.)
+
+## Setelah push
+GitHub -> tab Actions -> tunggu hijau -> buka run -> Artifacts -> VTX-Mouse-Pro-apk -> unduh, ekstrak, pasang APK.
+Kalau merah: kirim 40 baris terakhir log "Build debug APK" ke chat.
