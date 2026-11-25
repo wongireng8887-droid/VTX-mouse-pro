@@ -233,7 +233,7 @@ class MainActivity : Activity() {
     }
 
     private fun inputDevices(): List<InputDevice> =
-        InputDevice.getDeviceIds().mapNotNull { InputDevice.getDevice(it) }
+        InputDevice.getDeviceIds().toList().mapNotNull { InputDevice.getDevice(it) }
 
     // ------------------------------------------------------------------ navigasi bawah
     private fun bottomNav(): View {
