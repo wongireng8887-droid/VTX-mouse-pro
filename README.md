@@ -8,7 +8,7 @@ Tema: Liquid Glass.
 | Fase | Isi | Status |
 |------|-----|--------|
 | 1 | Fondasi: repo, build otomatis, kerangka tampilan Liquid Glass (tab Game / Optimisasi Performa / Pengaturan) | selesai |
-| 2a | Koneksi Shizuku otomatis, status Terhubung, Tes Sentuhan | **ini** |
+| 2a | Koneksi Shizuku otomatis, status Terhubung | **ini** |
 | 2b | Pairing debug nirkabel (ADB) | |
 | 3 | Izin & overlay: logo V muncul/hilang otomatis, daftar game | |
 | 4 | Pemetaan dasar: Sentuh, joystick, tangkap keyboard & mouse | |
@@ -36,7 +36,7 @@ Satu fase = satu zip. Lanjut ke fase berikutnya hanya setelah daftar tes fase se
 Yang sengaja belum ada di Fase 1: koneksi Shizuku/ADB (status header selalu "Belum terhubung"), overlay, pemetaan, dan toggle Optimisasi Performa (tertulis "Segera").
 
 
-## Daftar tes Fase 2a
+## Daftar tes Fase 2a (tanpa Tes Sentuhan)
 
 Syarat: Shizuku terpasang dan sedang jalan (aktifkan lewat debug nirkabel atau root).
 
@@ -44,5 +44,4 @@ Syarat: Shizuku terpasang dan sedang jalan (aktifkan lewat debug nirkabel atau r
 2. Buka VTX Mouse Pro. Dialog izin Shizuku muncul SENDIRI (sekali per sesi). Pilih **Izinkan**.
 3. Header berubah jadi **Terhubung** (titik hijau) tanpa menekan apa pun lagi.
 4. Pengaturan > **Shizuku**: pill **Aktif**.
-5. Pengaturan > **Tes Sentuhan** > **Mulai tes**: lingkaran menyala hijau dan muncul "Berhasil: sentuhan masuk ke layar".
 6. Matikan Shizuku lalu buka ulang VTX: header berubah (mis. "Shizuku belum jalan"), tidak crash.

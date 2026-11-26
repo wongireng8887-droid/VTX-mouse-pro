@@ -43,7 +43,6 @@ import com.vtx.mousepro.core.ShizukuBridge
 import com.vtx.mousepro.ui.GlassBackground
 import com.vtx.mousepro.ui.GlassDrawable
 import com.vtx.mousepro.ui.GlassToggle
-import com.vtx.mousepro.ui.TouchTargetView
 import com.vtx.mousepro.ui.Vtx
 import com.vtx.mousepro.ui.argb
 
@@ -501,11 +500,6 @@ class MainActivity : Activity() {
         enterSub(addGamePage())
     }
 
-    private fun openTouchTest() {
-        returnTab = 2
-        enterSub(touchTestPage())
-    }
-
     private fun enterSub(page: View) {
         showingSub = true
         onBackInvokedDispatcher.registerOnBackInvokedCallback(OnBackInvokedDispatcher.PRIORITY_DEFAULT, backCb)
@@ -625,77 +619,6 @@ class MainActivity : Activity() {
             row.addView(toggle, lp(dp(54), dp(32)))
             box.addView(row, lp(MATCH, WRAP, top = dp(8)))
         }
-    }
-
-    // ------------------------------------------------------------------ halaman Tes Sentuhan
-    private fun touchTestPage(): View {
-        val page = LinearLayout(this)
-        page.orientation = LinearLayout.VERTICAL
-        page.setPadding(dp(20), dp(2), dp(20), dp(8))
-
-        val top = LinearLayout(this)
-        top.orientation = LinearLayout.HORIZONTAL
-        top.gravity = Gravity.CENTER_VERTICAL
-        val back = tv("\u2039", 28f, Vtx.MINT, true)
-        back.gravity = Gravity.CENTER
-        back.background = glass(22)
-        back.setOnClickListener { closeSub() }
-        top.addView(back, lp(dp(44), dp(44)))
-        top.addView(tv("Tes Sentuhan", 18f, Vtx.TEXT, true), lp(WRAP, WRAP, left = dp(12)))
-        page.addView(top, lp(MATCH, WRAP))
-
-        val body = LinearLayout(this)
-        body.orientation = LinearLayout.HORIZONTAL
-        body.gravity = Gravity.CENTER_VERTICAL
-        val target = TouchTargetView(this)
-        body.addView(target, lp(dp(170), dp(170), left = dp(10)))
-
-        val side = LinearLayout(this)
-        side.orientation = LinearLayout.VERTICAL
-        side.setPadding(dp(24), 0, dp(10), 0)
-        val result = tv("Tekan Mulai tes. Sistem akan mengetuk lingkaran ini lewat Shizuku.", 15f, Vtx.TEXT)
-        side.addView(result, lp(MATCH, WRAP))
-        val hint = tv("Kamu juga bisa mengetuk lingkarannya sendiri untuk melihat reaksinya.", 12f, Vtx.MUTED)
-        side.addView(hint, lp(MATCH, WRAP, top = dp(8)))
-        val start = LinearLayout(this)
-        start.orientation = LinearLayout.HORIZONTAL
-        start.gravity = Gravity.CENTER
-        start.background = glass(26, 1f, glow = true, filled = true)
-        start.setOnClickListener { runTouchTest(target, result) }
-        start.addView(icon(R.drawable.ic_play, Color.WHITE, 22), lp(dp(22), dp(22)))
-        start.addView(tv("Mulai tes", 17f, Color.WHITE, true), lp(WRAP, WRAP, left = dp(10)))
-        side.addView(start, lp(dp(220), dp(52), top = dp(16)))
-        body.addView(side, lp(0, WRAP, 1f))
-        page.addView(body, lp(MATCH, 0, 1f))
-        return page
-    }
-
-    private fun runTouchTest(target: TouchTargetView, result: TextView) {
-        if (!Injector.ready) {
-            result.setTextColor(Vtx.RED)
-            result.text = "Belum terhubung ke Shizuku."
-            return
-        }
-        target.reset()
-        result.setTextColor(Vtx.TEXT)
-        result.text = "Mengirim ketukan..."
-        val loc = IntArray(2)
-        target.getLocationOnScreen(loc)
-        val cx = loc[0] + target.width / 2f
-        val cy = loc[1] + target.height / 2f
-        val h = Handler(Looper.getMainLooper())
-        Injector.touch(0, 0, cx, cy)
-        h.postDelayed({ Injector.touch(2, 0, 0f, 0f) }, 80)
-        h.postDelayed({
-            if (target.downCount > 0) {
-                result.setTextColor(Vtx.MINT)
-                result.text = "Berhasil: sentuhan masuk ke layar. Injeksi bekerja."
-            } else {
-                Injector.releaseAll()
-                result.setTextColor(Vtx.RED)
-                result.text = "Gagal: ketukan tidak diterima. Coba sambung ulang Shizuku."
-            }
-        }, 1200)
     }
 
     // ------------------------------------------------------------------ tab Optimisasi Performa
@@ -843,15 +766,6 @@ class MainActivity : Activity() {
             }
         }
         col.addView(shzRow, lp(MATCH, WRAP, top = dp(8)))
-
-        val ready = Injector.ready
-        val testRow = featureRow(R.drawable.ic_play, "Tes Sentuhan",
-            "Ketuk layar lewat Shizuku untuk memastikan injeksi bekerja.",
-            pill(if (ready) "Tes" else "Butuh koneksi", false, muted = !ready))
-        testRow.setOnClickListener {
-            if (Injector.ready) openTouchTest() else toast("Sambungkan Shizuku dulu")
-        }
-        col.addView(testRow, lp(MATCH, WRAP, top = dp(8)))
 
         col.addView(featureRow(R.drawable.ic_terminal, "Pairing ADB", "Hubungkan perangkat melalui ADB (opsional).",
             pill("Segera", false, muted = true)), lp(MATCH, WRAP, top = dp(8)))

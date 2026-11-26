@@ -1,9 +1,9 @@
-# Update VTX Mouse Pro lewat Termux (Fase 2a)
+# Update VTX Mouse Pro lewat Termux (Fase 2a - tanpa Tes Sentuhan)
 
 Folder kerja: ~/storage/shared/VTXMousePro   (repo git ada di subfolder "repo")
 
-ZIP=~/storage/downloads/VTXMousePro_fase2a.zip
-[ -f "$ZIP" ] || ZIP=~/storage/shared/VTXMousePro/VTXMousePro_fase2a.zip
+ZIP=~/storage/downloads/VTXMousePro_tanpa_tes_sentuhan.zip
+[ -f "$ZIP" ] || ZIP=~/storage/shared/VTXMousePro/VTXMousePro_tanpa_tes_sentuhan.zip
 cd ~/storage/shared/VTXMousePro && \
 ls -l "$ZIP" && \
 rm -rf _unzip && mkdir _unzip && \
@@ -15,7 +15,7 @@ cp -r ../_unzip/VTXMousePro/. . && \
 test -f app/build.gradle.kts && \
 git add -A && \
 git status --short | head -20 && \
-git commit -m "Fase 2a: koneksi Shizuku otomatis + tes sentuhan" && \
+git commit -m "Fase 2a: hapus fitur Tes Sentuhan" && \
 git push
 
 (Cek hasil git status: harus M/A, bukan banyak D.)
