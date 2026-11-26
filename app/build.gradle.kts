@@ -11,8 +11,8 @@ android {
         applicationId = "com.vtx.mousepro"
         minSdk = 35          // Android 15
         targetSdk = 36       // Android 16
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = 2
+        versionName = "0.2.0"
 
         // hanya 64-bit
         ndk { abiFilters += "arm64-v8a" }
@@ -28,4 +28,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+}
+
+dependencies {
+    implementation("dev.rikka.shizuku:api:13.1.5")
+    implementation("dev.rikka.shizuku:provider:13.1.5")
 }
